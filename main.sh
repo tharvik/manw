@@ -39,7 +39,7 @@ check_args ()
 download ()
 {
 	rm '/tmp/manw'
-	local URL=https://en.wikipedia.org/wiki/$1
+	local URL="https://en.wikipedia.org/w/index.php?title=$1&action=edit"
 	wget -c "$URL" -nv -O '/tmp/manw'
 }
 
@@ -48,7 +48,7 @@ download ()
 main ()
 {
 	check_args $@
-	download "$1"
+	download "$*"
 	./parse.awk '/tmp/manw' > /tmp/man_page
 	man '/tmp/man_page'
 }

@@ -42,8 +42,6 @@ function link(text) {
 	echo("\\fI" text "\\fP")
 }
 
-function if_
-
 # setup
 BEGIN {
 	activate = 0		# main code to parse
@@ -94,7 +92,7 @@ BEGIN {
 
 		# parse the rest
 		} else {
-			
+
 			# main loop, which switch on every keywords
 			size = split($0, array, "''|'''|]]|\\[\\[|\\|", seps)	
 			bold_switch = 0
