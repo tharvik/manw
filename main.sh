@@ -2,7 +2,7 @@
 
 
 # manw
-#  translate a wikipedia page in a man page
+#  translate a wikipedia page into a man page
 
 
 ## Arguments
