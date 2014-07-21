@@ -19,11 +19,11 @@ syntax ()
 {
 	echo 'manw: translate a wikipedia page in a man page'
 	echo 'Usage:'
-	echo -e "\t$0 page-name"
+	echo -e "\t$0 language page-name"
 	echo 'Example:'
-	echo -e "\t$0 man page"
-	echo -e "\t$0 man_page"
-	echo -e "\t$0 Man page"
+	echo -e "\t$0 en man page"
+	echo -e "\t$0 fr man_page"
+	echo -e "\t$0 de Man page"
 	exit 1
 }
 
@@ -35,11 +35,12 @@ check_args ()
 }
 
 # download the given page name
-#  $1	the page name
+#  $1	the language
+#  $2	the page name
 download ()
 {
 	rm '/tmp/manw'
-	local URL="https://en.wikipedia.org/w/index.php?title=$1&action=edit"
+	local URL="https://$1.wikipedia.org/w/index.php?title=$2&action=edit"
 	wget -c "$URL" -nv -O '/tmp/manw'
 }
 
@@ -48,7 +49,20 @@ download ()
 main ()
 {
 	check_args $@
-	download "$*"
+	language=''
+	title=''
+	if [ $# -ge 2 ] ; then 
+		language=$1
+		shift
+		title="$*"
+	else 
+		language="en"
+		title="$*"
+	fi
+	echo "Language : $language"
+	echo "Title : $title"
+
+	download "$language" "$title"
 	./parse.awk '/tmp/manw' > /tmp/man_page
 	man '/tmp/man_page'
 }
