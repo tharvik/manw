@@ -39,7 +39,9 @@ check_args ()
 #  $2	the page name
 download ()
 {
-	rm '/tmp/manw'
+	if [ -e '/tmp/manw' ] && [ ! -d '/tmp/manw' ] ; then 
+		rm '/tmp/manw'
+	fi
 	local URL="https://$1.wikipedia.org/w/index.php?title=$2&action=edit"
 	wget -c "$URL" -nv -O '/tmp/manw'
 }
